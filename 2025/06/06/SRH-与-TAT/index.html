@@ -14,7 +14,7 @@
 <meta property="og:description" content="写这篇的初衷是想整理micro LED 中TAT的公式与模型，为后续的仿真和RHCS的理论解释打基础，更高的追求是从公式出发，找到激活能（EA）和能级深度，漏电机制的对应关系。会着重与分析各个项的物理含义。 我在学习atlas有关的资料时发现，官方的handbook是一个很好（且浓缩）的学习资料，在gpt的帮助下可以快速找到自己想学的东西同时不断追问深入 在GaN中有很多杂质和缺陷，有的是人为引入">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-06-06T05:36:26.000Z">
-<meta property="article:modified_time" content="2025-06-06T10:59:29.495Z">
+<meta property="article:modified_time" content="2025-06-06T11:48:28.120Z">
 <meta property="article:author" content="肖星辰">
 <meta property="article:tag" content="micro-LED">
 <meta name="twitter:card" content="summary">
@@ -148,7 +148,7 @@
       
         <time datetime="2025-06-06T05:36:26.000Z" class="dt-published" itemprop="datePublished">2025-06-06</time>
         
-        (Updated: <time datetime="2025-06-06T10:59:29.495Z" class="dt-updated" itemprop="dateModified">2025-06-06</time>)
+        (Updated: <time datetime="2025-06-06T11:48:28.120Z" class="dt-updated" itemprop="dateModified">2025-06-06</time>)
         
       
     </div>
@@ -201,7 +201,7 @@
 <li>随后陷阱从空 $\rightarrow$ 满：空穴从陷阱发射（电子到来）</li>
 </ul>
 <p>所以净复合速率为：</p>
-<p>$$<br>R&#x3D;N_T[\underbrace{c_p}<em>{\text {空穴捕获 }} \cdot f_t-\underbrace{e_p}</em>{\text {空穴发射 }} \cdot\left(1-f_t\right)]<br>$$<br>那么这个公式是否适用于带正电的复合中心呢，答案是肯定的，用电子捕获-电子发射 x 空穴占据概率会得到相同的结果</p>
+<p>$$<br>R&#x3D;N_T[{c_p} \cdot f_t-{e_p} \cdot\left(1-f_t\right)]<br>$$<br>那么这个公式是否适用于带正电的复合中心呢，答案是肯定的，用电子捕获-电子发射 x 空穴占据概率会得到相同的结果</p>
 <p>带入上一步求得的 $f_t$ ，经过整理如下</p>
 <p>$$<br>R&#x3D;\frac{N_T \cdot\left(p n-n_i^2\right)}{\left(n+n_1\right) &#x2F; c_p+\left(p+p_1\right) &#x2F; c_n}<br>$$</p>
 <p>引入：</p>
