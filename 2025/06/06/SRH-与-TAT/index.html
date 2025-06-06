@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="写这篇的初衷是想整理micro LED 中TAT的公式与模型，为后续的仿真和RHCS的理论解释打基础，更高的追求是从公式出发，找到激活能（EA）和能级深度，漏电机制的对应关系。会着重与分析各个项的物理含义。 我在学习atlas有关的资料时发现，官方的handbook是一个很好（且浓缩）的学习资料，在gpt的帮助下可以快速找到自己想学的东西同时不断追问深入 在GaN中有很多杂质和缺陷，有的是人为引入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SRH 与 TAT">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="写这篇的初衷是想整理micro LED 中TAT的公式与模型，为后续的仿真和RHCS的理论解释打基础，更高的追求是从公式出发，找到激活能（EA）和能级深度，漏电机制的对应关系。会着重与分析各个项的物理含义。 我在学习atlas有关的资料时发现，官方的handbook是一个很好（且浓缩）的学习资料，在gpt的帮助下可以快速找到自己想学的东西同时不断追问深入 在GaN中有很多杂质和缺陷，有的是人为引入">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-06-06T05:36:26.000Z">
+<meta property="article:modified_time" content="2025-06-06T10:01:41.240Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="micro-LED">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SRH 与 TAT</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/03/17/%E7%85%A4%EF%BC%8C%E7%8B%97%EF%BC%8C%E9%85%92/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&text=SRH 与 TAT"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&is_video=false&description=SRH 与 TAT"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SRH 与 TAT&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&name=SRH 与 TAT&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&t=SRH 与 TAT"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SRH 与 TAT
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-06T05:36:26.000Z" class="dt-published" itemprop="datePublished">2025-06-06</time>
+        
+        (Updated: <time datetime="2025-06-06T10:01:41.240Z" class="dt-updated" itemprop="dateModified">2025-06-06</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/micro-LED/" rel="tag">micro-LED</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>写这篇的初衷是想整理micro LED 中TAT的公式与模型，为后续的仿真和RHCS的理论解释打基础，更高的追求是从公式出发，找到激活能（EA）和能级深度，漏电机制的对应关系。会着重与分析各个项的物理含义。</p>
+<p>我在学习atlas有关的资料时发现，官方的handbook是一个很好（且浓缩）的学习资料，在gpt的帮助下可以快速找到自己想学的东西同时不断追问深入</p>
+<p>在GaN中有很多杂质和缺陷，有的是人为引入的（比如dopant）有的是工艺中不可避免引入的（C,H,O等），在材料与材料的界面中也会出现极化电荷和表面态。这些杂质和缺陷往往会带电，在偏压条件下捕获载流子。比如一个电离的Si，贡献电子到导带后自身带正电，先捕获电子再捕获空穴，就完成了一次“复合”</p>
+<p>SRH描述的就是这个过程</p>
+<p>$$<br>R_{S R H}&#x3D;\frac{p n-n_{i e}^2}{\tau_p\left[n+n_{i e} \exp \left(\frac{\mathrm{ETRAP}}{k T_L}\right)\right]+\tau_n\left[p+n_{i e} \exp \left(\frac{-\mathrm{ETRAP}}{k T_L}\right)\right]}<br>$$</p>
+<p>ETRAP &#x3D; ET-EFi，看看这个公式，分子是驱动项，非平衡条件下的np-ni2。要理解这个分母，需要从SRH公式的推导出发</p>
+<ul>
+<li>电子捕获（陷阱变满）：$c_n&#x3D;\sigma_n v_{t h, n} n$</li>
+<li>空穴发射（陷阱变满）：$e_p &#x3D; \sigma_p v_p p_1$</li>
+<li>电子发射（陷阱变空）：$e_n &#x3D; \sigma_p v_n n_1$</li>
+<li>空穴捕获（陷阱变空）：$c_p&#x3D;\sigma_p v_{t h, p} p$</li>
+</ul>
+<p>其中</p>
+<ul>
+<li><p>捕获速率 &#x3D; 散射截面 x 载流子速度 x 载流子浓度</p>
+</li>
+<li><p>$p_1 &#x3D; n_i \exp\left( \frac{-ETRAP}{kT} \right)$ 是一个与能级位置有关的“等效空穴浓度”，表示当陷阱能级处于热平衡时，空穴的“有效密度”。</p>
+</li>
+<li><p>为什么发射速率会和散射截面以及载流子速度有关，我没有想清楚物理图像，但先认了</p>
+</li>
+</ul>
+<p><br><br><br> $f_t$ 是陷阱被电子占据的概率，所以电子发射和空穴捕获依赖于$f_t$， 空穴发射和电子捕获依赖于1-$f_t$</p>
+<p>$<br>\frac{d f_t}{d t}$&#x3D; 电子俘获+ 空穴发射 -  电子发射 - 空穴俘获</p>
+<p>稳态时：$\frac{d f_t}{d t}&#x3D;0$</p>
+<p>可得<br>$$<br>\sigma_n v_n n\left(1-f_t\right)+e_p\left(1-f_t\right)&#x3D;e_n f_t+\sigma_p v_p p f_t<br>$$</p>
+<p>解出 $f_t$ ：</p>
+<p>$$<br>f_t&#x3D;\frac{\sigma_n v_n n+e_p}{\sigma_n v_n n+e_p+\sigma_p v_p p+e_n}<br>$$<br><br><br></p>
+<p>考虑复合中心带负电时，复合事件发生的物理条件：</p>
+<ul>
+<li>首先陷阱从满 $\rightarrow$ 空：电子从陷阱发射（空穴到来）</li>
+<li>随后陷阱从空 $\rightarrow$ 满：空穴从陷阱发射（电子到来）</li>
+</ul>
+<p>所以净复合速率为：</p>
+<p>$$<br>R&#x3D;N_T[\underbrace{c_p}<em>{\text {空穴捕获 }} \cdot f_t-\underbrace{e_p}</em>{\text {空穴发射 }} \cdot\left(1-f_t\right)]<br>$$<br>那么这个公式是否适用于带正电的复合中心呢，答案是肯定的，用电子捕获-电子发射 x 空穴占据概率会得到相同的结果</p>
+<p>带入上一步求得的 $f_t$ ，经过整理如下</p>
+<p>$$<br>R&#x3D;\frac{N_T \cdot\left(p n-n_i^2\right)}{\left(n+n_1\right) &#x2F; c_p+\left(p+p_1\right) &#x2F; c_n}<br>$$</p>
+<p>引入：</p>
+<ul>
+<li>$\tau_n&#x3D;\frac{1}{\sigma_n v_n N_T}$</li>
+<li>$\tau_p&#x3D;\frac{1}{\sigma_p v_p N_T}$</li>
+<li>$n_1&#x3D;n_i \exp \left(\frac{E_t-E_i}{k T}\right)$</li>
+<li>$p_1&#x3D;n_i \exp \left(\frac{E_i-E_t}{k T}\right)$<br>带入并整理：<br>$$<br>R_{S R H}&#x3D;\frac{p n-n_{i e}^2}{\tau_p\left[n+n_{1}  \right]+\tau_n\left[p+p_{1} \right]}<br>$$</li>
+<li>现在我们能理解分母了，决定SRH的$\tau$代表两次捕获之间的间隔时间，这个时间越短，则SRH复合的速率越快；</li>
+<li>n+n1则代表   本征发射+陷阱发射 ，复合中心的能级离费米能级越远，陷阱发射就越强烈，电荷也就越不容易在复合中心中停留</li>
+</ul>
+<br>
+因此，SRH复合更容易在深能级(距离费米能级更近)缺陷中发生
+
+<p>来一段handbook中3-80关于TAT的描述</p>
+<p>Trap-assisted tunneling is modeled by including appropriate enhancement factors [99] ( $\Gamma_n{ }^{D I R A C}$ and $\Gamma_p{ }^{\text {DIRAC }}$ ) in the trap lifetimes in Equation 3-72. These enhancement factors modify the lifetimes so that they include the effects of phonon-assisted tunneling on the emission of electrons and holes from a trap. This model is enabled by specifying TRAP. TUNNEL in the MODELS statement.<br>For donor like traps, the recombination term for traps becomes:</p>
+<p>$$<br>R_D&#x3D;\frac{p n-n_{i e}^2}{\frac{\mathrm{TAUN}}{1+\Gamma_n^{D I R A C}}\left[p+\text { DEGEN } \cdot \mathrm{FAC} n_{i e} \exp \left(\frac{E_i-E_t}{k T_L}\right)\right]+\frac{\mathrm{TAUP}}{1+\Gamma_p^{D I R A C}}\left[n+\frac{1}{\mathrm{DEGEN} \cdot \mathrm{FAC}} n_{i e} \exp \left(\frac{E_t-E_i}{k T_L}\right)\right]}<br>$$</p>
+<p>For acceptor like traps, the recombination term becomes:</p>
+<p>$$<br>R_A&#x3D;\frac{p n-n_{i e}^2}{\frac{\mathrm{TAUN}}{1+\Gamma_n^{D I R A C}}\left[p+\frac{1}{\mathrm{DEGEN} \cdot \mathrm{FAC}} n_{i e} \exp \left(\frac{E_i-E_t}{k T_L}\right)\right]+\frac{\mathrm{TAUP}}{1+\Gamma_p^{D I R A C}}\left[n+\mathrm{DEGEN} \cdot \mathrm{FAC} n_{i e} \exp \left(\frac{E_t-E_i}{k T_L}\right)\right]}<br>$$</p>
+<p>可以观察到TAT和SRH就差了一个系数$\Gamma^{D I R A C}$,我们来看看是什么个事</p>
+<p>在atlas中，$\Gamma^{D I R A C}$的计算分为local和non-local模式，local模式假设局域的电场匀强（即能带没有二次斜率），non-local则使用局域的积分，形式为</p>
+<p>$$<br>\Gamma_n^{\mathrm{DIRAC}} &#x3D; \frac{1}{kT} \int_0^{\Delta E_n} e^{-E&#x2F;kT} \cdot T(E), dE<br>$$<br>使用 WKB 法<br>$$<br>T(E) &#x3D; \exp\left( -\frac{2}{\hbar} \int_{x_1}^{x_2} \sqrt{2m\left( V(x) - E \right)} , dx \right)<br>$$</p>
+<p><small><small>这个公式源于 <strong>WKB（Wentzel–Kramers–Brillouin）近似</strong> 对一维定态薛定谔方程的近似化解：</p>
+<p>$$<br>\frac{d^2 \psi(x)}{dx^2} + \frac{2m}{\hbar^2}(E - V(x)) \psi(x) &#x3D; 0<br>$$</p>
+<p>当 $E &lt; V(x)$（即粒子能量低于势垒），这个微分方程解出来的波函数是<strong>指数衰减型</strong>的：</p>
+<p>$$<br>\psi(x) \propto \exp\left( -\int \sqrt{2m(V(x) - E)} , dx \right)<br>$$</p>
+<p>而在量子力学中：<strong>波函数平方 $|\psi(x)|^2$ 就代表概率密度。</strong><br></small></small><br>这组方程中，对E的积分从0~ΔE，ΔE &#x3D; 导带能量-trap能量；从一维势垒的定义可知，V(x)代表“与空间位置相关的能量”，在我们的语境中就是导带的能量。<br>到这里我产生了疑惑，如果V(x)-E小于零（即trap能量高于局域的导带，会怎么样呢）</p>
+<ul>
+<li>从chat老师那里得知，这时已经不属于TAT，而是属于BTBT（band to band transition）,atlas 中联合使用“models srh tat tat.nonlocal bbt.kl”即可</li>
+</ul>
+<p>WKB描述的物理图像是</p>
+<ul>
+<li><p>一个电子被困在能级 $E_T$ 的陷阱中；</p>
+</li>
+<li><p>它通过与晶格声子相互作用，<strong>获得额外能量</strong> $E$；</p>
+</li>
+<li><p>剩下的能量差 $\Delta E_n - E$ 需要通过量子隧穿越势垒；</p>
+<p>  总的释放概率是：</p>
+<ul>
+<li>先获得能量 $E$ 的热激发概率：$\propto e^{-E&#x2F;kT}$；</li>
+<li>然后以该能量 $E$ 穿透势垒的概率：$T(E)$。</li>
+</ul>
+</li>
+</ul>
+<p>对于x1和x2的设置需要单独新建mesh，silvaco中如是说<br><small>To use this model, specify an extra rectangular mesh encompassing the region where the Γ terms are to be evaluated. To position the special mesh, use the QTX.MESH and QTY.MESH statement. You must then set the required direction of the quantum tunneling using the QTUNN.DIR parameter on the MODELS statement. Outside this mesh, the local model of the previous section will be used to evaluate the Γ terms.</small><br>此外，在强电场对于能垒的lowering作用（Poole-Frenkel）也可以被纳入考虑，使用“TRAP.COULOMBIC”指令<br></bar></p>
+<p>这一篇就到这里，关于其他复合机制（auger之类的）以及TAT对应的ideality factor和温度相关性，留到以后再说</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&text=SRH 与 TAT"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&is_video=false&description=SRH 与 TAT"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SRH 与 TAT&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&title=SRH 与 TAT"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&name=SRH 与 TAT&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/06/SRH-%E4%B8%8E-TAT/&t=SRH 与 TAT"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
