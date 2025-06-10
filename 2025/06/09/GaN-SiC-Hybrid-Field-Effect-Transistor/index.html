@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="准备对yangshen blog中的和热仿真有关的文献做一个literature review，主要focus我感兴趣的内容，主要了解的方向有  对GaN HEMT建模的简化方式，模型（边界条件等） 材料参数，各类典型值 实际建模的结果（温度分布）以求形成一个有数据和mechanism为基础的overviewref：Guidelines for Reduced-Order Thermal Mode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GaN-HEMT电热模拟的基本参数与验证方法">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="准备对yangshen blog中的和热仿真有关的文献做一个literature review，主要focus我感兴趣的内容，主要了解的方向有  对GaN HEMT建模的简化方式，模型（边界条件等） 材料参数，各类典型值 实际建模的结果（温度分布）以求形成一个有数据和mechanism为基础的overviewref：Guidelines for Reduced-Order Thermal Mode">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-18-21-39.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-17-52-56.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-19-10-15.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-18-44-21.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-21-50-46.png">
+<meta property="article:published_time" content="2025-06-08T16:46:00.000Z">
+<meta property="article:modified_time" content="2025-06-10T14:35:45.904Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-18-21-39.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>GaN-HEMT电热模拟的基本参数与验证方法</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/07/atlas/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&text=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&is_video=false&description=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GaN-HEMT电热模拟的基本参数与验证方法&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&name=GaN-HEMT电热模拟的基本参数与验证方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&t=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        GaN-HEMT电热模拟的基本参数与验证方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-08T16:46:00.000Z" class="dt-published" itemprop="datePublished">2025-06-09</time>
+        
+        (Updated: <time datetime="2025-06-10T14:35:45.904Z" class="dt-updated" itemprop="dateModified">2025-06-10</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>准备对yangshen blog中的和热仿真有关的文献做一个literature review，主要focus我感兴趣的内容，主要了解的方向有</p>
+<ul>
+<li>对GaN HEMT建模的简化方式，模型（边界条件等）</li>
+<li>材料参数，各类典型值</li>
+<li>实际建模的结果（温度分布）<br>以求形成一个有数据和mechanism为基础的overview<br>ref：<small><span style="color:gray">Guidelines for Reduced-Order Thermal Modeling of Multifinger GaN HEMTs</span></small></li>
+</ul>
+<p>peak channel 和heat influx 可以分别达到1MW&#x2F;cm2;1KW&#x2F;cm2, within 2DEG is 40kw&#x2F;cm2</p>
+<p>电热耦合分两类<br><img src="/images/atlas/2025-06-10-18-21-39.png"><br> </bar><br>可靠的电热建模需要包含</p>
+<ul>
+<li>volumetric heat flux distribution, </li>
+<li>interfacialthermal boundary resistance (TBR) between layers, </li>
+<li>temperaturedependent thermal properties, </li>
+<li>and representative boundary conditions.</li>
+</ul>
+<p><img src="/images/atlas/2025-06-10-17-52-56.png"><br>总结了GaN和SiC的热导率和界面热阻的典型值，GaN在160左右，SiC在350左右，小算一下，要导1KW&#x2F;cm2的热（1E7w&#x2F;m2），GaN温度梯度是0.625K&#x2F;um，1MW对应625K&#x2F;um</p>
+<ul>
+<li>常用半导体，金刚石最大可以到2200，<br><img src="/images/atlas/2025-06-10-19-10-15.png"></li>
+<li>常用金属的热导率Cu400，Al240，Au315，Ti25，Ni90<br>一般衬底的厚度在几微米到几十微米的区间，考虑线性热阻是一定受不了的，这里就体现了扩散热流的重要性</li>
+</ul>
+<p>再来关注一下界面热阻<br>在界面热阻为0.1cm2 K kW-1时，1kW&#x2F;cm2热流对应0.1K温差，1MW对应100K，界面热阻可以起到“整流作用“</p>
+<p>温度升高时，晶格振动加剧，声子自由程变小，导热能力下降，所以热导率下降</p>
+<p>GaN的热导率根据工艺的不同区别很大（130-260），需要考虑如何确定device的热导率<br> </bar> </bar><br>当谈及建模时，一个绕不开的问题是“如何确认建模的有效性”，在电热耦合中，这个方法一般为拉曼光谱测温（Raman thermometry）ref：<small><span style="color:gray">基于拉曼散射的传热测量和分析</span></small><br>当入射光（通常为激光）照射到材料时，大部分会发生瑞利散射（无能量损失），但一小部分会发生非弹性散射（拉曼散射），这时光子与材料的声子发生能量交换，产生stockes和anti-stockes峰，峰值满足公式<br>$$<br>\frac{I_{\text{Stocks}}}{I_{\text{Anti-Stocks}}}<br>&#x3D; \frac{\alpha_i + \alpha_{\text{AS}}}{\alpha_i + \alpha_S}<br>\left( \frac{\omega_i - \omega_l}{\omega_i + \omega_l} \right)^4<br>\exp\left( \frac{\hbar \omega_l}{kT} \right)<br>$$<br><img src="/images/atlas/2025-06-10-18-44-21.png"><br>通过查表拟合，就能得到温度。拉曼频率，半峰宽也可以用来测温，三种方法中拉曼频率测温最常用。<br>根据拉曼法的原理也可知</p>
+<ul>
+<li>分辨率取决于激光光斑大小（现在可以做到1微米）</li>
+<li>得到的温度是“近表面等效温度”<br></bar> </bar><br>在本文中，52kW&#x2F;cm2下拉曼法测到了最大温差为215K</li>
+</ul>
+<p>对于封装的仿真如下<small><span style="color:gray">The numerical model consisted of volumes representing the packaged device and the<br>experimental setup including: the device die (a 60-finger GaN HEMT grown on a 6H-SiC substrate), 80Au20Sn solder (L1 TIM), 15Cu85W shim, Artic Silver 5 (L2 TIM), and C101 equipment</span></small>，后面有单独讨论封装的文章</p>
+<p>文章省略了热点以上的结构（钝化层和金属pad）<small><span style="color:gray">The silicon nitride (SiN) passivation and surface metallization of the source, drain, and gate ohmic contacts were neglected based on their small impact on spreading heat flux in-plane</span></small>甚至把AlGaN层也省略了<small><span style="color:gray">Similarly, the presence of the thin AlGaN layer was omitted, as the typically thickness is of two orders of magnitude thinner than the GaN layer with low thermal conductivity (&lt;30)</span></small></p>
+<p>这篇文章同样使用Synopsys Sentaurus算2D电学[1]，再导入cosmol算3D传热的方式[2]，具体我去看看它的参考文献；以及电热特性的参考，待会整理。注意傅里叶定律只能解稳态的热分布，瞬态的会更麻烦。</p>
+<ul>
+<li>sentaurus算出分布过后直接当热源作用在GaN表面，四周边界条件为绝热。</li>
+<li>为了计算方便，设置了镜像面，镜像面附近的网格更密集</li>
+<li>最佳的组合为二次插值下，栅长方向6个网格，整个横向20个网格</li>
+</ul>
+<p>文章接下来讨论了简化热源的仿真结果，将热源简化到了G-D的场板下方<br><img src="/images/atlas/2025-06-10-21-50-46.png"><br>我觉得对解决hybrid FET没什么帮助，因为作为新器件没有简化热源的研究</p>
+<p>然后讨论了一下声子散射对热导率的影响啥的</p>
+<ul>
+<li>学校里的GaN&#x2F;SiC界面热阻约为0.3-0.6，更高的界面热阻会增加substrate的热导（</li>
+<li>文章后面重点在讨论不同设置（T-dependent参数）下的constant heat flux对精度的影响，后面确定仿真方案后有需要再看</li>
+</ul>
+<p></bar> </bar><br>[1]Sentaurus 2D的ref是官网界面“<a target="_blank" rel="noopener" href="https://www.synopsys.com/manufacturing/tcad/device-simulation/sentaurus-device.html%E2%80%9D">https://www.synopsys.com/manufacturing/tcad/device-simulation/sentaurus-device.html”</a><br>[2]这篇文章中参数设置原文献是review，先不找了</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&text=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&is_video=false&description=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GaN-HEMT电热模拟的基本参数与验证方法&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&title=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&name=GaN-HEMT电热模拟的基本参数与验证方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/&t=GaN-HEMT电热模拟的基本参数与验证方法"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
