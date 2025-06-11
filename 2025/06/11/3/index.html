@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ref：Thermal Modelling of GaN &amp; InP RF Devices with Intrinsic Account for Nanoscale Transport EffectsIEDM invited的文章，基于第一性原理，用蒙特卡洛仿真观察到了三倍的hotspot temperature  Monte Carlo simulator that solves the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="均匀热源仿真GaN-HEMT温度分布">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/11/3/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="ref：Thermal Modelling of GaN &amp; InP RF Devices with Intrinsic Account for Nanoscale Transport EffectsIEDM invited的文章，基于第一性原理，用蒙特卡洛仿真观察到了三倍的hotspot temperature  Monte Carlo simulator that solves the">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-15-49-23.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-18-13-08.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-16-20-49.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-17-13-05.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-18-26-59.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-19-01-15.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-19-08-36.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-19-28-35.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-20-21-20.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-20-30-24.png">
+<meta property="article:published_time" content="2025-06-11T07:34:33.000Z">
+<meta property="article:modified_time" content="2025-06-11T14:21:22.491Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN-HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-15-49-23.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>均匀热源仿真GaN-HEMT温度分布</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/10/2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/11/3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&text=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&is_video=false&description=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=均匀热源仿真GaN-HEMT温度分布&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/11/3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&name=均匀热源仿真GaN-HEMT温度分布&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/11/3/&t=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        均匀热源仿真GaN-HEMT温度分布
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-11T07:34:33.000Z" class="dt-published" itemprop="datePublished">2025-06-11</time>
+        
+        (Updated: <time datetime="2025-06-11T14:21:22.491Z" class="dt-updated" itemprop="dateModified">2025-06-11</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN-HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>ref：<small><span style="color:gray">Thermal Modelling of GaN &amp; InP RF Devices with Intrinsic Account for Nanoscale Transport Effects</span></small><br>IEDM invited的文章，基于第一性原理，用蒙特卡洛仿真观察到了三倍的hotspot temperature</p>
+<ul>
+<li>Monte Carlo simulator that solves the Boltzmann transport equation (BTE) governing the microscopic heat carriers [8] with first-principles phonon&#x2F;electron dispersions and scattering rates</li>
+</ul>
+<p>先用1D的MC确定了材料的热导率和界面热阻<br><img src="/images/atlas/2025-06-11-15-49-23.png"><br>这个图也有意思的，杂质加剧声子散射从而降低热导率<br><img src="/images/atlas/2025-06-11-18-13-08.png"><br>有趣的发现，于2DMC相比，均匀热源会低估峰值温度，而忽略BEOL又会提高峰值温度。文中指出，使用简化的均匀热源模型会得到完全错误的heat profile，但可以准确预测热点温度，这和之前那篇用拉曼光谱拟合的结论符合<br><img src="/images/atlas/2025-06-11-16-20-49.png"></p>
+<p>交流模拟对应阻抗，方法是先将热源设置成sin形式，得到热阻抗得到阶跃响应，然后对输入波形卷积得到温度曲线<br><img src="/images/atlas/2025-06-11-17-13-05.png"></p>
+<p>ref：<small><span style="color:gray">Self-Heating and Equivalent Channel Temperature in Short Gate Length GaN HEMTs</span></small><br>这篇文章提出了短沟道HEMT的等效温度（equivalent channel temperature）</p>
+<p>同样使用Sentaurus device，产热考虑了recombination heat和Peltier heat<br><img src="/images/atlas/2025-06-11-18-26-59.png"><br>cutline在表面以下2.5nm，条件为Vg&#x3D;0，Vd&#x3D;10，这种分布也是老生常谈了，贴出来玩玩<br><img src="/images/atlas/2025-06-11-19-01-15.png"><br>等效沟道温度的定义是，与当前I-V相交的“等温分布曲线”<br><img src="/images/atlas/2025-06-11-19-08-36.png"><br>左图选取了等功率下改变gate电压的温度分布。为啥发热不守恒？<br>gate电压变小，peak温度升高。右图显示了peak温度-Vd的斜率受Vg影响，但它们的等效温升不受Vg影响，这代表了什么？<br>Id&#x3D;Wqnv<br>二维电子气的密度几乎和温度无关（300-600k）6%<br>电子drift速度是一个分段函数，取决于有没有饱和<br>$$<br>v(E, T)&#x3D; \begin{cases}\frac{\mu_0(T) E}{1+a E &#x2F; E_C(T)}, &amp; E&lt;E_C(T) \ v_{\mathrm{sat}}(T), &amp; E&gt;E_C(T)\end{cases}<br>$$<br><img src="/images/atlas/2025-06-11-19-28-35.png"><br>不同等效温度下沟道中的场强，mobility，electron velocity分布<br>可以翻译为，高温主要限制沟道中的最大mobility，而GD的电场尖峰远超饱和的电场，所以热点的物理参数基本没有受影响<br>温度升高时，热点区域以外的沟道会有更高的阻值，也会有对应产生更多焦耳热</p>
+<p>这不就巧了吗，热点外的沟道原理gate，因此不受Vg的影响<br>思路明晰但又有意思的文章</p>
+<p>ref：<small><span style="color:gray">Modeling Bias Dependence of Self-Heating in GaN HEMTs Using Two Heat Sources</span></small><br>如题，讲了一个双热源模型，我现在感觉仿真HEMT多半要靠gate热源模型惹。这篇紧接着上一篇的思路，将沟道与热点的产热分开算</p>
+<p>这个双热源模型合理且聪明</p>
+<ul>
+<li>首先用sentarus仿真发热</li>
+<li>然后进行分段计算</li>
+<li>划分区域后建模为双热源<br>3D模型就得简化热源啊（哭腔）<br><img src="/images/atlas/2025-06-11-20-21-20.png"><br>观察发现，HS2趋于水平，HS1开始发热都出现在Vsa附近，这也是符合物理图像的，据此提出一阶双热源模型<br>$$<br>\begin{cases}P_1&#x3D;I_{\mathrm{d}} V_{\mathrm{d}}, \quad P_2&#x3D;0, &amp; \text { for } \quad V_{\mathrm{d}} \leq V_{\mathrm{dsat}} \ P_1&#x3D;I_{\mathrm{d}} V_{\mathrm{dsat}}, \quad P_2&#x3D;I_{\mathrm{d}}\left(V_{\mathrm{d}}-V_{\mathrm{dsat}}\right), &amp; \text { for } \quad V_{\mathrm{d}}&gt;V_{\mathrm{dsat}}\end{cases}<br>$$<br>接下来检验模型的有效性<br><img src="/images/atlas/2025-06-11-20-30-24.png"></li>
+<li>文中的建模是有效的</li>
+<li>gate length从0.1um增大到0.8um时，采用0.16的gate热源依然有好的热仿真效果，这是因为gate热源来自电场集中<br>$$<br>T_{\max }&#x3D;T_0+R_{\mathrm{sub}} P_{\mathrm{diss}}+R_1 P_1+R_2 P_2<br>$$<br>然后文章提出了一个计算Tmax的公式，乍一看有点脱了裤子放屁，但是用来快速迭代或许会很有用</li>
+<li>R1，R2分别是从HS1，HS2出发到substrate的热阻，这里的热阻包含了扩散热阻</li>
+<li>Pdissipate这一项的意思是，通过GaN层后，R1R2都扩散到finger大小</li>
+<li>对于扩散热阻显著的低估了，文章也没有给出这么计算的有效性</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/11/3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&text=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&is_video=false&description=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=均匀热源仿真GaN-HEMT温度分布&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/11/3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&title=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/11/3/&name=均匀热源仿真GaN-HEMT温度分布&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/11/3/&t=均匀热源仿真GaN-HEMT温度分布"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
