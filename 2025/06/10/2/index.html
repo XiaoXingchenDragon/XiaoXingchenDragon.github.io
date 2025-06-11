@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ref：Investigation of Self-Heating Effect on DC and RF Performances in AlGaN&#x2F;GaN HEMTs on CVD-Diamond 本文的功率22w&#x2F;mm，金刚石衬底就是硬气sheetdensity为1*10E13方块电阻是430欧姆 阻值在430&#x2F;50&#x3D;8欧的量级mobility是145">
+<meta property="og:type" content="article">
+<meta property="og:title" content="literature review2">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/10/2/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="ref：Investigation of Self-Heating Effect on DC and RF Performances in AlGaN&#x2F;GaN HEMTs on CVD-Diamond 本文的功率22w&#x2F;mm，金刚石衬底就是硬气sheetdensity为1*10E13方块电阻是430欧姆 阻值在430&#x2F;50&#x3D;8欧的量级mobility是145">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-30-34.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-29-55.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-37-14.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-41-16.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-49-36.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-50-19.png">
+<meta property="article:published_time" content="2025-06-10T15:07:08.000Z">
+<meta property="article:modified_time" content="2025-06-11T04:51:19.594Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-11-12-30-34.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>literature review2</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/09/GaN-SiC-Hybrid-Field-Effect-Transistor/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/10/2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&text=literature review2"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&is_video=false&description=literature review2"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=literature review2&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/10/2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&name=literature review2&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/10/2/&t=literature review2"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-substrate%E7%AE%80%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">1. substrate简化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2D%E6%8D%A23D%E7%9A%84%E8%AF%AF%E5%B7%AE"><span class="toc-number">2.</span> <span class="toc-text">2.2D换3D的误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-GaN%E4%BB%A5%E4%B8%8A%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.GaN以上的结构</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        literature review2
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-10T15:07:08.000Z" class="dt-published" itemprop="datePublished">2025-06-10</time>
+        
+        (Updated: <time datetime="2025-06-11T04:51:19.594Z" class="dt-updated" itemprop="dateModified">2025-06-11</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>ref：<small><span style="color:gray">Investigation of Self-Heating Effect on DC and RF Performances in AlGaN&#x2F;GaN HEMTs on CVD-Diamond</span></small></p>
+<p>本文的功率22w&#x2F;mm，金刚石衬底就是硬气<br>sheetdensity为1*10E13<br>方块电阻是430欧姆 阻值在430&#x2F;50&#x3D;8欧的量级<br>mobility是1450<br>Ids&#x3D;0.6A&#x2F;mm&#x3D;6A&#x2F;cm<br>饱和电压5V左右<br>沟道长度为7um<br>场强约为7.1E3V&#x2F;cm，<br>$$<br>E_{\text{sat}} &#x3D; \frac{v_{\text{sat}}}{\mu} &#x3D; \frac{1 \times 10^7}{1450} \approx 6.9 \times 10^3~\text{V&#x2F;cm}<br>$$<br>I&#x3D;V&#x2F;R&#x3D;5&#x2F;4&#x3D;1.25A&#x2F;0.2&#x3D;6.25A&#x2F;cm</p>
+<p>GaN&#x2F;Si 的温升30K*mm&#x2F;W，每1W&#x2F;mm升高30K<br>用silvaco也可以得到温度分布，insert具体看cosmol的要求<br>2D TCAD simulation (SILVACO) was also performed using the GIGA module consistently with BLAZE</p>
+<p>ref：<small><span style="color:gray">Modeling and analyzing near-junction thermal transport in high-heat-flux GaN devices heterogeneously integrated with diamond</span></small></p>
+<p>#这篇文章讨论了不同简化方式的准确度，主流的简化方式：</p>
+<ul>
+<li>将封装简化为边界条件</li>
+<li>三维转二维</li>
+<li>忽略GaN之上的结构<br>结论</li>
+</ul>
+<ol>
+<li>substrate下的结构可以被等效为热对流条件</li>
+<li>3D转2D会造成29%deviation</li>
+<li>忽略GaN之上结构的做法是可行的</li>
+</ol>
+<p></bar></bar></p>
+<h3 id="1-substrate简化"><a href="#1-substrate简化" class="headerlink" title="1. substrate简化"></a>1. substrate简化</h3><p>文中substrate参数：<br>a convective boundary condition ( h &#x3D; 319-404<del>\text{kW}</del>\text{m}^{-2}~\text{K}^{-1} ) and ( T_{\infty} &#x3D; 300 )<br>热沉的材料将会很大程度的影响这个值（CuMo410；CuW319）<br><img src="/images/atlas/2025-06-11-12-30-34.png"></p>
+<p>网格密度：纵向15，横向6~8，网格最小尺寸为100nm 网格在靠近表面的0.05um最密集</p>
+<p>将SiN薄层完全简化为TBR，大小为30m2 k&#x2F;GW，换算成cm就是30cm2 K&#x2F;100KW&#x3D;0.3 cm2 K&#x2F;KW<br>文献中的值范围为6.5-50，界面热阻是多层结构的等效，包含了界面以及界面附近的低热阻区域，界面热阻对峰值温度的影响很大，可以达到20K（between 6.5~30）<br><img src="/images/atlas/2025-06-11-12-29-55.png"></p>
+<p>在计算热导方面用了简化的声子模型，将diamond分层计算，为什么要这么做，计算结果是怎么样的（插眼）[1]<br>Debye-Callaway model was used to calculate anisotropic and nonhomogeneous diamond thermal conductivities in GaN-on-diamond HEMTs.<br>这篇文章里也有基于声子传热的GaN热导计算流程</p>
+<h3 id="2-2D换3D的误差"><a href="#2-2D换3D的误差" class="headerlink" title="2.2D换3D的误差"></a>2.2D换3D的误差</h3><p><img src="/images/atlas/2025-06-11-12-37-14.png"><br>2D模拟缺乏垂直于纸面的导热路径，所以会造成温度最大29%的高估</p>
+<h3 id="3-GaN以上的结构"><a href="#3-GaN以上的结构" class="headerlink" title="3.GaN以上的结构"></a>3.GaN以上的结构</h3><p><img src="/images/atlas/2025-06-11-12-41-16.png"><br>仅造成最大0.4%的误差，可忽略</p>
+<p>###其他参数的影响<br>热源宽度，GaN层厚度和TBR值的影响，不过我觉得主要是玩变量，意义不大<br><img src="/images/atlas/2025-06-11-12-49-36.png"><br><img src="/images/atlas/2025-06-11-12-50-19.png"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-substrate%E7%AE%80%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">1. substrate简化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2D%E6%8D%A23D%E7%9A%84%E8%AF%AF%E5%B7%AE"><span class="toc-number">2.</span> <span class="toc-text">2.2D换3D的误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-GaN%E4%BB%A5%E4%B8%8A%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.GaN以上的结构</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/10/2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&text=literature review2"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&is_video=false&description=literature review2"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=literature review2&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/10/2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&title=literature review2"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/10/2/&name=literature review2&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/10/2/&t=literature review2"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

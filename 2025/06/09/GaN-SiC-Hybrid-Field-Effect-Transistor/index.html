@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-18-44-21.png">
 <meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-10-21-50-46.png">
 <meta property="article:published_time" content="2025-06-08T16:46:00.000Z">
-<meta property="article:modified_time" content="2025-06-10T14:35:45.904Z">
+<meta property="article:modified_time" content="2025-06-11T04:52:26.579Z">
 <meta property="article:author" content="肖星辰">
 <meta property="article:tag" content="SiC-GaN HyFET">
 <meta name="twitter:card" content="summary">
@@ -100,6 +100,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="Previous post" href="/2025/06/10/2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="Next post" href="/2025/06/07/atlas/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -154,7 +156,7 @@
       
         <time datetime="2025-06-08T16:46:00.000Z" class="dt-published" itemprop="datePublished">2025-06-09</time>
         
-        (Updated: <time datetime="2025-06-10T14:35:45.904Z" class="dt-updated" itemprop="dateModified">2025-06-10</time>)
+        (Updated: <time datetime="2025-06-11T04:52:26.579Z" class="dt-updated" itemprop="dateModified">2025-06-11</time>)
         
       
     </div>
@@ -198,7 +200,7 @@
 <p>GaN的热导率根据工艺的不同区别很大（130-260），需要考虑如何确定device的热导率<br> </bar> </bar><br>当谈及建模时，一个绕不开的问题是“如何确认建模的有效性”，在电热耦合中，这个方法一般为拉曼光谱测温（Raman thermometry）ref：<small><span style="color:gray">基于拉曼散射的传热测量和分析</span></small><br>当入射光（通常为激光）照射到材料时，大部分会发生瑞利散射（无能量损失），但一小部分会发生非弹性散射（拉曼散射），这时光子与材料的声子发生能量交换，产生stockes和anti-stockes峰，峰值满足公式<br>$$<br>\frac{I_{\text{Stocks}}}{I_{\text{Anti-Stocks}}}<br>&#x3D; \frac{\alpha_i + \alpha_{\text{AS}}}{\alpha_i + \alpha_S}<br>\left( \frac{\omega_i - \omega_l}{\omega_i + \omega_l} \right)^4<br>\exp\left( \frac{\hbar \omega_l}{kT} \right)<br>$$<br><img src="/images/atlas/2025-06-10-18-44-21.png"><br>通过查表拟合，就能得到温度。拉曼频率，半峰宽也可以用来测温，三种方法中拉曼频率测温最常用。<br>根据拉曼法的原理也可知</p>
 <ul>
 <li>分辨率取决于激光光斑大小（现在可以做到1微米）</li>
-<li>得到的温度是“近表面等效温度”<br></bar> </bar><br>在本文中，52kW&#x2F;cm2下拉曼法测到了最大温差为215K</li>
+<li>得到的温度是“近表面等效温度”<br></bar> </bar><br>在本文中，4W&#x2F;mm 52kW&#x2F;cm2下拉曼法测到了最大温差为215K</li>
 </ul>
 <p>对于封装的仿真如下<small><span style="color:gray">The numerical model consisted of volumes representing the packaged device and the<br>experimental setup including: the device die (a 60-finger GaN HEMT grown on a 6H-SiC substrate), 80Au20Sn solder (L1 TIM), 15Cu85W shim, Artic Silver 5 (L2 TIM), and C101 equipment</span></small>，后面有单独讨论封装的文章</p>
 <p>文章省略了热点以上的结构（钝化层和金属pad）<small><span style="color:gray">The silicon nitride (SiN) passivation and surface metallization of the source, drain, and gate ohmic contacts were neglected based on their small impact on spreading heat flux in-plane</span></small>甚至把AlGaN层也省略了<small><span style="color:gray">Similarly, the presence of the thin AlGaN layer was omitted, as the typically thickness is of two orders of magnitude thinner than the GaN layer with low thermal conductivity (&lt;30)</span></small></p>
