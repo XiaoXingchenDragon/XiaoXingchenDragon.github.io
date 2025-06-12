@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="这篇的目的是更深入的了解HyFET，并提出一些可能的仿真路线让我们沿着文章的逻辑梳理吧 The dual-epitaxy SiC JFETstructure用了两次epi的SiC，utilizing p-doping grounded SiC to prevent GaN topology from high voltageref：Accumulation mode triple gate SOI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HyFET的工艺参数与建模分析">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="这篇的目的是更深入的了解HyFET，并提出一些可能的仿真路线让我们沿着文章的逻辑梳理吧 The dual-epitaxy SiC JFETstructure用了两次epi的SiC，utilizing p-doping grounded SiC to prevent GaN topology from high voltageref：Accumulation mode triple gate SOI">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-16-20-00.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-16-23-15.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-16-25-43.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-17-05-25.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-18-32-47.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-42-30.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-43-20.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-56-06.png">
+<meta property="article:published_time" content="2025-06-12T04:58:29.000Z">
+<meta property="article:modified_time" content="2025-06-12T13:14:18.277Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN-HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-16-20-00.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HyFET的工艺参数与建模分析</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/11/3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺参数与建模分析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺参数与建模分析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HyFET的工艺参数与建模分析&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺参数与建模分析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺参数与建模分析"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-dual-epitaxy-SiC-JFETstructure"><span class="toc-number">1.</span> <span class="toc-text">The dual-epitaxy SiC JFETstructure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-quality-GaNepitaxy-on-4%C2%B0-offaxis-4HSiC-substrate"><span class="toc-number">2.</span> <span class="toc-text">High-quality GaNepitaxy on 4°-offaxis 4HSiC substrate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Damascene-process-based-in-cell-interconnection"><span class="toc-number">3.</span> <span class="toc-text">Damascene-process-based in-cell interconnection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#device-parameter"><span class="toc-number">4.</span> <span class="toc-text">device parameter</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HyFET的工艺参数与建模分析
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-12T04:58:29.000Z" class="dt-published" itemprop="datePublished">2025-06-12</time>
+        
+        (Updated: <time datetime="2025-06-12T13:14:18.277Z" class="dt-updated" itemprop="dateModified">2025-06-12</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN-HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>这篇的目的是更深入的了解HyFET，并提出一些可能的仿真路线<br>让我们沿着文章的逻辑梳理吧</p>
+<h3 id="The-dual-epitaxy-SiC-JFETstructure"><a href="#The-dual-epitaxy-SiC-JFETstructure" class="headerlink" title="The dual-epitaxy SiC JFETstructure"></a>The dual-epitaxy SiC JFETstructure</h3><p>用了两次epi的SiC，utilizing p-doping grounded SiC to prevent GaN topology from high voltage<br>ref：<small><span style="color:gray">Accumulation mode triple gate SOI LDMOS withultralow on-resistance and enhanced transconductance</span></small><br>ref：<small><span style="color:gray">High-Voltage Thin-SOI LDMOS With UltralowON-Resistance and Even Temperature Characteristic</span></small><br>这两篇文章prove the validity of the p-GaN as well as providing numerical simulations for the effectiveness of the HyFET<br><img src="/images/atlas/2025-06-12-16-20-00.png"><br>super junction可以在关断时形成耗尽区，从而提升击穿电压，文中使用triple gate 加上氧化层，让我们来看看这么做会带来什么好处<br><img src="/images/atlas/2025-06-12-16-23-15.png"><br>这样的trigate扩展了沟道，现在氧化层表面也能形成沟道，因此降低了on-resistance<br><img src="/images/atlas/2025-06-12-16-25-43.png"><br>关断时也扩展了depletion region，从结果上来看，trigate在降低了on-resistance的同时得到了和superjunction差不多的击穿电压<br><img src="/images/atlas/2025-06-12-17-05-25.png"><br>SOI的制作过程，根据我的理解，这两篇证明了gate可以通过高参杂区域形成沟道或耗尽，作为JEFT的理论支持</p>
+<ul>
+<li>plink区域在正偏时影响不大，但是在反偏时可能会影响关断电压</li>
+<li>用不同能量的p参杂后1700度的退火，p参的浓度没有给，和drain的n接触也没有给</li>
+<li>drift区域的n参8E15，决定了击穿电压</li>
+<li>second epi layer会影响导通电阻，n参为5E16</li>
+</ul>
+<h3 id="High-quality-GaNepitaxy-on-4°-offaxis-4HSiC-substrate"><a href="#High-quality-GaNepitaxy-on-4°-offaxis-4HSiC-substrate" class="headerlink" title="High-quality GaNepitaxy on 4°-offaxis 4HSiC substrate"></a>High-quality GaNepitaxy on 4°-offaxis 4HSiC substrate</h3><p>在SiC上生长高质量的GaN，同时保证导电性可能是制作这个器件的主要困难。SiC和GaN的晶格失配很小（仅为3.6%），生长困难的原因是高质量的SiC使用offaxis，而GaN必须on axis生长<br>ref：<small><span style="color:gray">Strain Release in GaN Epitaxy on 4° OffAxis 4H-SiC</span></small><br>We developed a two-step biaxial strainrelease method to tackle this challenge<br><img src="/images/atlas/2025-06-12-18-32-47.png"></p>
+<p>SiC传统的生长方法是4°off-axis，这是由于</p>
+<ul>
+<li>SiC有多种堆叠方式（4H，6H这些）</li>
+<li>SiC属于4-4半导体，极性较弱，容易沿台阶进行堆叠</li>
+</ul>
+<p>而GaN一般使用on-axis这是因为</p>
+<ul>
+<li>极性强，台阶效应弱</li>
+<li>没有多种堆叠方式（同前一条）</li>
+<li>可能利于形成2DEG</li>
+</ul>
+<p>生长的TD浓度为1E9&#x2F;cm2,和onaxis的SiC comparable，AlN的厚度为60nm，文中对各种缺陷进行了详尽的测量，等要用了再看<br>ref：<small><span style="color:gray">Effects of Thermal Boundary Resistance on ThermalManagement of Gallium-Nitride-Based SemiconductorDevices: A Review</span></small><br>TBR的理论计算我同样不准备涉及，找这篇文章是想找到GaN&#x2F;AlN&#x2F;SiC界面TBR的典型值范围</p>
+<ul>
+<li>ref84: 36nm AlN, TBR &#x3D; 5.3 m2k&#x2F;GW, 还挺小。使用了玻尔兹曼弛豫近似，计算了PD和near-interface dislocation的贡献</li>
+<li>ref85：重点研究，对GaN&#x2F;AlN&#x2F;SiC界面热阻进行了详尽的研究和分析，是估计这个device中TBR的关键！TBR的值是13~30<br>ref： Low Thermal Resistance of a GaN-on-SiC Transistor Structure with Improved Structural Properties at The Interface</li>
+<li>ref原文也对AlNinterlayer进行了详细的分析，我的原则是多线并进，等到了需要这个东西的时候再来找&#x2F;分析<br><img src="/images/atlas/2025-06-12-19-42-30.png"><br><img src="/images/atlas/2025-06-12-19-43-20.png"><br>贴两张图先跑了</li>
+</ul>
+<h3 id="Damascene-process-based-in-cell-interconnection"><a href="#Damascene-process-based-in-cell-interconnection" class="headerlink" title="Damascene-process-based in-cell interconnection"></a>Damascene-process-based in-cell interconnection</h3><p>Damascene的意思是先刻蚀槽再填充金属，然后再CMP<br>interconnection连接了2DEG和SiC，好消息是文中给出了contactresistance，到时候当电阻算就完事了<br><img src="/images/atlas/2025-06-12-19-56-06.png"><br>另一个技术是p-GaN gate with GaON reinforcement，虽然和热建模没啥关系<br>ref：<small><span style="color:gray">p-GaN Gate HEMT With Surface Reinforcementfor Enhanced Gate Reliability</span></small><br>用O plasma后退火，再p-GaN上方形成了一层GaON，提升BV减小漏电</p>
+<h3 id="device-parameter"><a href="#device-parameter" class="headerlink" title="device parameter"></a>device parameter</h3><ul>
+<li>SiC JEFT 阻值50mΩ&#x2F;cm2 阈值为-4.4V</li>
+<li>2DEG为6.6Ω&#x2F;mm，饱和电流600mA，属于最先进层次 阈值为0.5V</li>
+</ul>
+<p>gate开启时，走D-G-S通路，饱和电流和Ron受SiC JEFT的限制<br>Gata关断时，成为一个reverse-biased的SiC PNjunction。这个时候其实是把S看成G，把M看成S<br>我靠，全部贯通了，SiC JEFT的一系列参数原来是这么来的，车上再仔细想想吧</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-dual-epitaxy-SiC-JFETstructure"><span class="toc-number">1.</span> <span class="toc-text">The dual-epitaxy SiC JFETstructure</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-quality-GaNepitaxy-on-4%C2%B0-offaxis-4HSiC-substrate"><span class="toc-number">2.</span> <span class="toc-text">High-quality GaNepitaxy on 4°-offaxis 4HSiC substrate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Damascene-process-based-in-cell-interconnection"><span class="toc-number">3.</span> <span class="toc-text">Damascene-process-based in-cell interconnection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#device-parameter"><span class="toc-number">4.</span> <span class="toc-text">device parameter</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺参数与建模分析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺参数与建模分析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HyFET的工艺参数与建模分析&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺参数与建模分析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺参数与建模分析"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
