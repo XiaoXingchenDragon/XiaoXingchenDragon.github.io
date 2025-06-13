@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="这篇的目的是更深入的了解HyFET，并提出一些可能的仿真路线让我们沿着文章的逻辑梳理吧 The dual-epitaxy SiC JFETstructure用了两次epi的SiC，utilizing p-doping grounded SiC to prevent GaN topology from high voltageref：Accumulation mode triple gate SOI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HyFET的工艺参数与建模分析">
+<meta property="og:title" content="HyFET的工艺与mos预夹断">
 <meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="XingChenhome">
 <meta property="og:description" content="这篇的目的是更深入的了解HyFET，并提出一些可能的仿真路线让我们沿着文章的逻辑梳理吧 The dual-epitaxy SiC JFETstructure用了两次epi的SiC，utilizing p-doping grounded SiC to prevent GaN topology from high voltageref：Accumulation mode triple gate SOI">
@@ -21,8 +21,11 @@
 <meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-42-30.png">
 <meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-43-20.png">
 <meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-12-19-56-06.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-13-13-01-48.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-13-13-02-12.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-13-13-44-08.png">
 <meta property="article:published_time" content="2025-06-12T04:58:29.000Z">
-<meta property="article:modified_time" content="2025-06-12T13:14:18.277Z">
+<meta property="article:modified_time" content="2025-06-13T06:23:43.867Z">
 <meta property="article:author" content="肖星辰">
 <meta property="article:tag" content="SiC-GaN-HyFET">
 <meta name="twitter:card" content="summary">
@@ -46,7 +49,7 @@
       
     
     <!-- title -->
-    <title>HyFET的工艺参数与建模分析</title>
+    <title>HyFET的工艺与mos预夹断</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -103,6 +106,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="Previous post" href="/2025/06/13/%E4%BB%BF%E7%9C%9F%E5%88%86%E6%9E%902/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="Next post" href="/2025/06/11/3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -118,16 +123,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺参数与建模分析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺参数与建模分析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=HyFET的工艺参数与建模分析&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺参数与建模分析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺参数与建模分析"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺与mos预夹断"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺与mos预夹断"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HyFET的工艺与mos预夹断&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺与mos预夹断&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺与mos预夹断"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -147,7 +152,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        HyFET的工艺参数与建模分析
+        HyFET的工艺与mos预夹断
     </h1>
 
 
@@ -161,7 +166,7 @@
       
         <time datetime="2025-06-12T04:58:29.000Z" class="dt-published" itemprop="datePublished">2025-06-12</time>
         
-        (Updated: <time datetime="2025-06-12T13:14:18.277Z" class="dt-updated" itemprop="dateModified">2025-06-12</time>)
+        (Updated: <time datetime="2025-06-13T06:23:43.867Z" class="dt-updated" itemprop="dateModified">2025-06-13</time>)
         
       
     </div>
@@ -212,7 +217,15 @@
 <li>SiC JEFT 阻值50mΩ&#x2F;cm2 阈值为-4.4V</li>
 <li>2DEG为6.6Ω&#x2F;mm，饱和电流600mA，属于最先进层次 阈值为0.5V</li>
 </ul>
-<p>gate开启时，走D-G-S通路，饱和电流和Ron受SiC JEFT的限制<br>Gata关断时，成为一个reverse-biased的SiC PNjunction。这个时候其实是把S看成G，把M看成S<br>我靠，全部贯通了，SiC JEFT的一系列参数原来是这么来的，车上再仔细想想吧</p>
+<p>gate开启时，走D-G-S通路，饱和电流和Ron受SiC JEFT的限制<br>Gata关断时，成为一个reverse-biased的SiC PNjunction。这个时候其实是把S看成G，把M看成S<br><img src="/images/atlas/2025-06-13-13-01-48.png"><br><img src="/images/atlas/2025-06-13-13-02-12.png"><br>理解hyFET比较麻烦的一个角度是“预夹断”，这个现象在mos管模型中有学过。从直观上来看，“夹断抑制电流”是一个负反馈过程，升高Vds一定会造成电流的提升，不会存在“预夹断后电流减少”这种现象。预夹断也标志着mos进入饱和区。<br><img src="/images/atlas/2025-06-13-13-44-08.png"><br>当D的电势够高时（Vs），G靠近D一端将无法维持与沟道Vth的电压差，从而阻值沟道的形成，在Vs之后出现空间电荷层<br>空间电荷又能怎，就像三极管的集电极一样，电子照样被带正电的Drain收集。但是为什么在预夹断之后会1.进入饱和区 2.由gate控制电流密度</p>
+<p>从微观上看</p>
+<ul>
+<li>空间电荷区域的电子以饱和速度被电场拉着走</li>
+<li>而参与漂移的电荷数量有反型层尖端的“电荷密度”决定，而这个密度由gate电压决定</li>
+<li>继续增加Vds也只会扩展空间电荷区，并不能影响电荷密度</li>
+</ul>
+<p>回到GaN-HEMT模型中，我们现在可以理解，空间电荷的形成是“高电势影响到Gate下沟道形成”的结果，当沟道不能再形成后，积累的正电荷形成强大的电场收集电子。因此在这里出现了等势面集中与热点</p>
+<p>下一步需要知道在sentarous中是如何处理耗尽区的，找JEFT的仿真结果应该会比较好</p>
 
   </div>
 </article>
@@ -249,16 +262,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺参数与建模分析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺参数与建模分析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=HyFET的工艺参数与建模分析&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺参数与建模分析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺参数与建模分析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺参数与建模分析"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&text=HyFET的工艺与mos预夹断"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&is_video=false&description=HyFET的工艺与mos预夹断"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HyFET的工艺与mos预夹断&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&title=HyFET的工艺与mos预夹断"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&name=HyFET的工艺与mos预夹断&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/&t=HyFET的工艺与mos预夹断"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
