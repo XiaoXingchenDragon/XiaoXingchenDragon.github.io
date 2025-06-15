@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="我需要对SiC JFET和hard switch 有更多了解ref：Silvaco Based Electro-Thermal Analysis of 4H-SiC TIV-JFET Structure Under Extremely High Current Density Resistive Switching一篇2016年的文章，用sivalco做的P+和N+区域的doping都是1E20S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SiC-JFET的vertical channel与热场分布">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="我需要对SiC JFET和hard switch 有更多了解ref：Silvaco Based Electro-Thermal Analysis of 4H-SiC TIV-JFET Structure Under Extremely High Current Density Resistive Switching一篇2016年的文章，用sivalco做的P+和N+区域的doping都是1E20S">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-09-15.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-37-47.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-39-11.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-43-57.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-48-22.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-56-10.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-11-02-03.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-14-21-06.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-15-22-45.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-14-21-40.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-15-48-46.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-16-16-17.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-16-18-54.png">
+<meta property="article:published_time" content="2025-06-15T01:58:40.000Z">
+<meta property="article:modified_time" content="2025-06-15T11:56:03.157Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN-HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-15-10-09-15.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SiC-JFET的vertical channel与热场分布</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2025/06/15/hard-switch/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/12/%E5%BB%BA%E6%A8%A1%E5%88%86%E6%9E%90/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&text=SiC-JFET的vertical channel与热场分布"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&is_video=false&description=SiC-JFET的vertical channel与热场分布"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SiC-JFET的vertical channel与热场分布&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&name=SiC-JFET的vertical channel与热场分布&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&t=SiC-JFET的vertical channel与热场分布"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SiC-JFET的vertical channel与热场分布
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-15T01:58:40.000Z" class="dt-published" itemprop="datePublished">2025-06-15</time>
+        
+        (Updated: <time datetime="2025-06-15T11:56:03.157Z" class="dt-updated" itemprop="dateModified">2025-06-15</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN-HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>我需要对SiC JFET和hard switch 有更多了解<br>ref：<small><span style="color:gray">Silvaco Based Electro-Thermal Analysis of 4H-SiC TIV-JFET Structure Under Extremely High Current Density Resistive Switching</span></small>一篇2016年的文章，用sivalco做的<br><img src="/images/atlas/2025-06-15-10-09-15.png"><br>P+和N+区域的doping都是1E20<br>SiC横向器件糟糕的原因是：SiC和SiO2界面存在大量缺陷，影响迁移率<br><img src="/images/atlas/2025-06-15-10-37-47.png"><br>resisitive开关的设置如下<br><img src="/images/atlas/2025-06-15-10-39-11.png"><br>DS上偏压，Gate交流，导通下的电压为2.2V，不知道这个条件和hard switch的条件差多少<br>on state电流100A&#x2F;cm2，功耗为0.22KW&#x2F;cm2，功耗太小了，峰值功耗是20mW&#x2F;10E-8cm2&#x3D;2E5&#x2F;cm2 峰值功耗很高但时间太短了<br><img src="/images/atlas/2025-06-15-10-43-57.png"><br>连续的波形模拟，有点意思<br><img src="/images/atlas/2025-06-15-10-48-22.png"><br>这篇文章没看出什么东西，gate设置没有，边界条件没有<br>ref：<small><span style="color:gray">Electrothermal simulations of a thermal sensor integrated with a 4H-SiC JFET</span></small><br>各向异性导热和temperature dependent thermal conductivity<br><img src="/images/atlas/2025-06-15-10-56-10.png"><br>Doping用蒙特卡洛模拟。很合理，它的工况是我需要的，Vgs&#x3D;0，Vds&#x3D;15<br><img src="/images/atlas/2025-06-15-11-02-03.png"><br>热点分布和我想的差不多<br>所以3D仿真的必要性在哪里<br>ref：<small><span style="color:gray">Modeling and High Temperature Characterization of SiC-JFET</span></small><br>SiC JFET本身是depletionmode，要得到enhancement，只用把gate和s用一个enhancement连接，这样的效果是</p>
+<ul>
+<li>enhancement未开启时，分压使得gate电压比JFET的S端低，实现关断</li>
+<li>enhancement开启时，Ron很小，JFET的g和s电压接近，器件开启，此时两个器件串联经过电流</li>
+<li>随着电压增大，enhancement上的分压增加，增加后又进一步“关断”JEFT，然后减小分压</li>
+<li>最终。S和gate的电压差会被控制在略大于关断电压的范围，这也保护了enhancement</li>
+</ul>
+<p>这便是GaN-SiC HyFET的背景。通过上面的分析易知</p>
+<ul>
+<li>Ron和饱和电流由小的决定和（SiC）</li>
+<li>开启栅压由GaN HEMT决定<br><img src="/images/atlas/2025-06-15-14-21-06.png"></li>
+<li>耗尽区的分布值得仔细思考</li>
+<li>首先价带导带是连续的，当不同typedoping的材料接触时，会自动形成耗尽区</li>
+<li>泊松定律决定了单位厚度的某个doping材料能形成的电场增量，因此在电压变化时，spacecharge也会发生变化</li>
+<li>没有spacecharge（中间的vertical channel）的形成条件是局域等势面，那么从能量的角度上说，spacecharge的单一边界一定是等势的<br><img src="/images/atlas/2025-06-15-15-22-45.png"><br>然后就可以理解vertical channel的存在了，因为尖端聚集效应，偏压的时候这里的电荷密度更大，沿着两段箭头的方向，更薄的材料也能实现需要的压降，vertical channel就产生了<br>接下来是SiC的电学模型<br><img src="/images/atlas/2025-06-15-14-21-40.png"></li>
+<li>space charge的本质是离化dopant形成的固定电荷，那么它们具有1. 单向导电性（因为有电场）2.drift capacitance所以可以被建模成并联的二极管电容</li>
+<li>然后一个一个端子看就可以了，DS路径很明确</li>
+<li>D往上是drift电阻，随后是RCV描述vertical channel电阻，剩下几坨都是space charge<br>下一篇ref：<small><span style="color:gray">Measurement and simulation of short circuit current sharing under parallel connection: SiC MOSFETs and SiC Cascode JFETs</span></small><br>21年这篇也是用silvaco，太好了是silvaco，我们有救了<br><img src="/images/atlas/2025-06-15-15-48-46.png"><br>SC条件指drain和和gate都开启的时候，enhancement mode还没有形成反馈时的低阻态状态，此时电流与电压俱高<br><img src="/images/atlas/2025-06-15-16-16-17.png"><br>欧耶，这个器件中同样有vertical导通区域 电流集中在channel，而热点在channel下方<br><img src="/images/atlas/2025-06-15-16-18-54.png"><br>I versus T</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&text=SiC-JFET的vertical channel与热场分布"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&is_video=false&description=SiC-JFET的vertical channel与热场分布"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SiC-JFET的vertical channel与热场分布&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&title=SiC-JFET的vertical channel与热场分布"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&name=SiC-JFET的vertical channel与热场分布&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/15/SiC-JFET/&t=SiC-JFET的vertical channel与热场分布"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
