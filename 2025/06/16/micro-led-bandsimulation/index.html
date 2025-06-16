@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="找蓝光GaN-micro-LED仿真的文章带trap和不带trap的文章各五篇，嗯得多看点paper，之前的学习状态不对这篇不赖ref：Designs of InGaN Micro‑LED Structure for Improving Quantum Efficiency at Low Current Density用APSYS仿真的几乎一模一样的参数，感动ing，文章主要对比了0.1A&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="micro-led-bandsimulation">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="找蓝光GaN-micro-LED仿真的文章带trap和不带trap的文章各五篇，嗯得多看点paper，之前的学习状态不对这篇不赖ref：Designs of InGaN Micro‑LED Structure for Improving Quantum Efficiency at Low Current Density用APSYS仿真的几乎一模一样的参数，感动ing，文章主要对比了0.1A&amp;#x2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-19-38-04.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-19-44-04.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-19-49-12.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-11-57.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-17-49.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-20-00.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-45-34.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-47-26.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-20-54-29.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-21-12-14.png">
+<meta property="article:published_time" content="2025-06-16T09:26:33.000Z">
+<meta property="article:modified_time" content="2025-06-16T13:19:16.543Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="micro-LED">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-16-19-38-04.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>micro-led-bandsimulation</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/16/GaN-%E6%9C%AA%E5%88%86%E7%B1%BB/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&text=micro-led-bandsimulation"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&is_video=false&description=micro-led-bandsimulation"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=micro-led-bandsimulation&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&name=micro-led-bandsimulation&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&t=micro-led-bandsimulation"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        micro-led-bandsimulation
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-16T09:26:33.000Z" class="dt-published" itemprop="datePublished">2025-06-16</time>
+        
+        (Updated: <time datetime="2025-06-16T13:19:16.543Z" class="dt-updated" itemprop="dateModified">2025-06-16</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/micro-LED/" rel="tag">micro-LED</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>找蓝光GaN-micro-LED仿真的文章带trap和不带trap的文章各五篇，嗯得多看点paper，之前的学习状态不对<br>这篇不赖ref：<small><span style="color:gray">Designs of InGaN Micro‑LED Structure for Improving Quantum Efficiency at Low Current Density</span></small><br>用APSYS仿真的<br><img src="/images/atlas/2025-06-16-19-38-04.png"><br>几乎一模一样的参数，感动ing，文章主要对比了0.1A&#x2F;cm2(1E-5)和200A&#x2F;cm2（0.02A）处情况<br><img src="/images/atlas/2025-06-16-19-44-04.png"><br>这个first level electron-hole wave function 有点意思</p>
+<ul>
+<li>注入会减轻斯塔克效应，使得first-level“更正对”</li>
+<li>因此，高注入电流会提高这个值<br><img src="/images/atlas/2025-06-16-19-49-12.png"><br>polarization会影响复合速率，具体体现在增加carrier集中的空间位置</li>
+<li>从右图看出，靠近p级时受影响最小，说明这里的注入最高</li>
+</ul>
+<p>GaN中，hole的浓度低一个量级，mobility低两个量级，这影响inject efficiency和radiative recombination rate<br><img src="/images/atlas/2025-06-16-20-11-57.png"><br>瞬态的电流密度可以超过总电流，没懂是怎么定义的<br><img src="/images/atlas/2025-06-16-20-17-49.png"><br>p-GaN对LED的影响很小<br><img src="/images/atlas/2025-06-16-20-20-00.png"><br>EBL中doping的影响就很大了，Aldoping和EBL都被fix了</p>
+<ul>
+<li>最接近n端的electron会产生向下bending的电场，从而在EBL表面形成valley，如果该情况发生，blocking作用就失效了（见图d中EBL区域的高electron浓度）</li>
+<li>同时，低concentration时也会增加hole inject的能垒</li>
+<li>因此，增加EBL的pdoping是有利的，文中用的是“much higher”，因为Mg中的p的activation energy甚至更低</li>
+<li>文中使用的6E19，drawback是形成了<br><img src="/images/atlas/2025-06-16-20-45-34.png"><br>不同电流下的barrier hight<br><img src="/images/atlas/2025-06-16-20-47-26.png"><br>随着Al组分的减小，前面提到的不利效应出现减弱，观察到injection变得更优。文章的结论是去掉EBL会得到更好的injection。但是这么做应该会使漏电升高<br><img src="/images/atlas/2025-06-16-20-54-29.png"></li>
+<li>200A时的SRH占1E-2</li>
+<li>0.1A时的auger可忽略，SRH comparable<br>文中提到Therefore, the effect of defect density can be estimated by simplychanging the SRH lifetime in the simulation.有点意思，回头去check一下handbook里面是怎么计算defect的</li>
+</ul>
+<p>ref：<small><span style="color:gray">Ultra-low-current driven InGaN blue micro light-emitting diodes for electrically efficient and self-heating relaxed microdisplay</span></small><br>这篇文章讲的是提升epi，抑制small size degradation<br><img src="/images/atlas/2025-06-16-21-12-14.png"></p>
+<ul>
+<li>波长和构型都很契合</li>
+<li>看左下的图，3.5nm的efficiency特别低，this could be attribute to the formation of the miniband near the interface.</li>
+<li></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&text=micro-led-bandsimulation"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&is_video=false&description=micro-led-bandsimulation"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=micro-led-bandsimulation&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&title=micro-led-bandsimulation"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&name=micro-led-bandsimulation&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/16/micro-led-bandsimulation/&t=micro-led-bandsimulation"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
