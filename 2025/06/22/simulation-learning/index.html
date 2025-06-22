@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="从atlas入手学一下electro-thermal modeling，在网上找了找资料，发现在有gpt的辅助下，分析atlas官方提供的例子应该是最舒服的，毕竟它们的例子是可收敛的hhhh，阶段目标是学习热仿真的案例，然后复现sic JEFT 的热场分布（用silvaco的）###首先学习一个GaN HEMT构型 12345678910111213141516171819202122232425">
+<meta property="og:type" content="article">
+<meta property="og:title" content="simulation-learning">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="从atlas入手学一下electro-thermal modeling，在网上找了找资料，发现在有gpt的辅助下，分析atlas官方提供的例子应该是最舒服的，毕竟它们的例子是可收敛的hhhh，阶段目标是学习热仿真的案例，然后复现sic JEFT 的热场分布（用silvaco的）###首先学习一个GaN HEMT构型 12345678910111213141516171819202122232425">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-22-14-25-36.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-22-17-05-59.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-22-18-08-15.png">
+<meta property="article:published_time" content="2025-06-22T06:02:40.000Z">
+<meta property="article:modified_time" content="2025-06-22T11:38:38.232Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN-HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-22-14-25-36.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>simulation-learning</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/20/%E5%A4%8D%E7%8E%B0%E6%B5%8B%E8%AF%95/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&text=simulation-learning"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&is_video=false&description=simulation-learning"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=simulation-learning&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&name=simulation-learning&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&t=simulation-learning"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        simulation-learning
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-22T06:02:40.000Z" class="dt-published" itemprop="datePublished">2025-06-22</time>
+        
+        (Updated: <time datetime="2025-06-22T11:38:38.232Z" class="dt-updated" itemprop="dateModified">2025-06-22</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN-HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>从atlas入手学一下electro-thermal modeling，在网上找了找资料，发现在有gpt的辅助下，分析atlas官方提供的例子应该是最舒服的，毕竟它们的例子是可收敛的hhhh，阶段目标是学习热仿真的案例，然后复现sic JEFT 的热场分布（用silvaco的）<br>###首先学习一个GaN HEMT<br><img src="/images/atlas/2025-06-22-14-25-36.png"><br>构型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">go atlas simflags=&quot;-80&quot;</span><br><span class="line">#改变内置的参数，使用电热耦合时必加</span><br><span class="line"></span><br><span class="line">mesh width=100 ^diag.flip</span><br><span class="line">#目的不明，疑似y轴翻转</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region num=1 x.min=0.5 x.max=8.5 y.max=0.5267 mat=AlGaN x.comp=0.25 </span><br><span class="line">region num=2 x.min=0.0 x.max=9.0 y.min=-5 y.max=0.5 mat=nitride insulator</span><br><span class="line">region num=3 x.min=0.5 x.max=8.5 y.min=0.5267 y.max=1 mat=GaN  donors=1e15 substrate    </span><br><span class="line">region num=4 x.min=0.0 x.max=9.0 y.min=1.0 y.max=2.0 mat=GaN </span><br><span class="line">region num=5 x.min=0.0 x.max=9.0 y.min=2.0 y.max=20.0 mat=sapphire insulator</span><br><span class="line">region num=6 x.min=0.0 x.max=9.0 y.min=-20 y.max=-5 mat=AlN</span><br><span class="line"></span><br><span class="line">elec num=1 name=source x.min=0 x.max=1 y.min=-5 y.max=1 </span><br><span class="line">elec num=2 name=drain x.min=6 x.max=9 y.min=-5 y.max=1 </span><br><span class="line">elec num=3 name=gate x.min=3 x.max=4 y.min=0.2 y.max=0.5</span><br><span class="line">elec num=4 substrate</span><br><span class="line">#注意这段代码，将substrate设置在GaN，蓝宝石设置为电绝缘，主要起导热作用</span><br><span class="line">#为什么将接触是一个二维区域，因为文章中的器件是肖特基接触，肖特基接触的场的影响被限制在这个区域</span><br><span class="line"></span><br><span class="line">models k.p print srh</span><br><span class="line">model lat.temp </span><br><span class="line">mobility FMCT.N Gansat.N</span><br><span class="line">#热学模型，K模型，GaN中的mobility行为</span><br><span class="line"></span><br><span class="line">model polarization calc.strain polar.scale=0.75</span><br><span class="line">model region=1 pch.elec</span><br><span class="line">interface neutralize x.min=3 x.max=4 y.min=0.48 y.max=0.52</span><br><span class="line">#极化，极化其实分为三步，第一步启用polarization，这一步计算出的极化电场和电荷，实际上是直接线性叠加在原来电场上的，准确性有限</span><br><span class="line">- 使用pch指令，在AlGaN中启用，将极化现象加入泊松方程求解中增加精度</span><br><span class="line">- 对于p-GaN而言，其下方的trap和surface states可以部分补偿2DEG的电场，从而一定程度屏蔽对Gate的电势，因此，在gate-AlGaN界面创建一个电中性区域有助于收敛</span><br><span class="line"></span><br><span class="line">thermcontact num=1 y.min=-20 y.max=-20 ext.temp=300  alpha=5000 </span><br><span class="line">#这个给出的就是热对流边界条件，不过5000稍微有点小了，我看的简化建模substrateboundary是404嘻嘻</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">solve previous</span><br><span class="line">solve vdrain=0.01</span><br><span class="line">solve vdrain=0.1</span><br><span class="line">solve vdrain=1</span><br><span class="line">solve vstep=1 name=drain vfinal=5</span><br><span class="line"></span><br><span class="line">solve name=gate vfinal=-10 vstep=-0.5</span><br><span class="line">log outf=ganfetex14_0.log</span><br><span class="line">solve name=gate vfinal=1 vstep=0.25</span><br><span class="line">log off</span><br><span class="line">#电压step</span><br><span class="line"></span><br><span class="line">#在atlas中使用全局变量的方法</span><br><span class="line">set vstart = 0</span><br><span class="line">set vstop = 15</span><br><span class="line">set vinc = .5</span><br><span class="line"></span><br><span class="line">solve init</span><br><span class="line">solve vgate=-3</span><br><span class="line">log outf=ganfetex14_1.log</span><br><span class="line">solve name=drain vdrain=$vstart vfinal=$vstop vstep=$vinc</span><br><span class="line">log off</span><br><span class="line">#在atlas中使用全局变量的方法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">log outf=ganfetex14_5.log master gains s.params inport=gate outport=drain</span><br><span class="line"></span><br><span class="line">solve ac freq=10 fstep=10 mult.f nfstep=7</span><br><span class="line">solve ac freq=1e9</span><br><span class="line">solve ac freq=2e9 fstep=2e9 nfstep=3</span><br><span class="line">solve ac freq=1e10 fstep=5e9 nfstep=8</span><br><span class="line">log off</span><br><span class="line">#交流下的增益等信息，稍后补充</span><br><span class="line"></span><br><span class="line">solve name=gate vfinal=-10 vstep=-0.5</span><br><span class="line">LOG outf=ganfetex14_13.log</span><br><span class="line">solve Vgate=0 ramptime=1e-8 dt=5e-10 tstop=1e-8</span><br><span class="line">solve dt=1e-9 tstop=1e-7</span><br><span class="line">solve dt=1e-8 tstop=1e-6</span><br><span class="line">solve dt=1e-7 tstop=1e-5</span><br><span class="line">solve dt=1e-6 tstop=1e-4</span><br><span class="line">#先到-10，然后猛地打开（到零）</span><br><span class="line">#第一行规定了ramptime（也就是pulse）</span><br><span class="line">#随后是指数级的采样点，由密到疏观察整个过程</span><br></pre></td></tr></table></figure>
+
+<p>插播复习一下欧姆接触和肖特基接触</p>
+<ul>
+<li>不管是p还是n型材料的接触，载流子都是从金属流向半导体，载流子种类不同</li>
+<li>金属没有禁带，同时含有丰富的自由电子，可以视为一个电子源</li>
+<li>欧姆接触阻挡载流子流动的方向，同时要求能垒尽可能的窄，实现隧穿</li>
+<li>肖特基接触要求从金属流出的时候不阻挡（那么反向就一定会阻挡）</li>
+</ul>
+<p>然后是判断金属电子亲合能于半导体的相对大小，电子亲合能是费米能级到真空能级所需的能量，接触时假设真空能级是对齐的</p>
+<ul>
+<li>当金属的费米能级低时（高功函数），接触时电子从半导体流向金属。从而在界面堆积形成正电荷<br>在p型中，正电荷会阻挡载流子的移动（欧姆）<br>在n型中，正电荷会吸引电子（肖特基）</li>
+<li>当金属的费米能级高时（低功函数），接触时电子从金属流向半导体。从而在界面堆积形成负电荷<br>在n型中，负电荷会阻挡载流子的移动（欧姆）<br>在p型中，负电荷会吸引电子（肖特基）<br>所以<br><img src="/images/atlas/2025-06-22-17-05-59.png"><br>接下来总结常用金属的功函数<br><img src="/images/atlas/2025-06-22-18-08-15.png"><br>GaN&#x3D;4.1eV SiC&#x3D;3.7eV<br>注意，对于欧姆接触来说，功函数没有那么重要，只要参杂够高就能隧穿<br>但对于p型GaN来说，doping困难，难以实现高参杂，所以欧姆接触比较困难。只能选择肖特基接触，肖特基需要功函数小的金属，使用Ar，Ti，Cr<br>n型容易天然形成肖特基接触，doping给多点反向也就隧穿了</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">补充：材料的温度相关的热导率</span><br><span class="line">![](images/atlas/2025-06-22-18-43-43.png)</span><br><span class="line">示例：</span><br><span class="line">material mat=Diamond TCON.POWER TC.NPOW=2 TC.CONST=1.4  #使用TCON.POWER模式，设置TC.NPOW，TC.CONST参数</span><br><span class="line">![](images/atlas/2025-06-22-18-44-47.png)</span><br><span class="line">支持对材料或区域进行修改</span><br></pre></td></tr></table></figure>
+<p>ok，接下来看一个SiC的仿真例子，这是一个有关SiC T-mos 的mobility仿真</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">首先使用了图形化编辑器go devedit，回头看看deckbuild里面能用吗</span><br><span class="line">material material=4H-SiC permitti=9.66 eg300=2.99 \</span><br><span class="line">			edb=0.1 gcb=2 eab=0.2 gvb=4 \</span><br><span class="line">			nsrhn=3e17 nsrhp=3e17 taun0=5e-10 taup0=1e-10 \</span><br><span class="line">			tc.a=100</span><br><span class="line">首先定义了和能带相关参数</span><br><span class="line">mobility material=4H-SiC	vsatn=2e7 vsatp=2e7 betan=2 betap=2 \</span><br><span class="line">			mu1n.caug=10  mu2n.caug=410 ncritn.caug=13e17  \</span><br><span class="line">			deltan.caug=0.6 gamman.caug=0.0 \</span><br><span class="line">			alphan.caug=-3 betan.caug=-3 \</span><br><span class="line">			mu1p.caug=20   mu2p.caug=95  ncritp.caug=1e19 \</span><br><span class="line">			deltap.caug=0.5  gammap.caug=0.0 \</span><br><span class="line">			alphap.caug=-3 betap.caug=-3</span><br><span class="line">然后是和mobility相关的参数</span><br></pre></td></tr></table></figure>
+<p>$$<br>\mu(N) &#x3D; \mu_1 + \frac{\mu_2 - \mu_1}{1 + \left( \frac{N}{N_{\text{crit}}} \right)^{\delta}}<br>$$<br>以上值都是atlas内置的默认参数，需要细调时可用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mobility material=4H-SiC	vsatn=2e7 vsatp=2e7 betan=2 betap=2 \</span><br><span class="line">			mu1n.caug=10  mu2n.caug=410 ncritn.caug=13e17  \</span><br><span class="line">			deltan.caug=0.6 gamman.caug=0.0 \</span><br><span class="line">			alphan.caug=-3 betan.caug=-3 \</span><br><span class="line">			mu1p.caug=20   mu2p.caug=95  ncritp.caug=1e19 \</span><br><span class="line">			deltap.caug=0.5  gammap.caug=0.0 \</span><br><span class="line">			alphap.caug=-3 betap.caug=-3</span><br><span class="line">#</span><br><span class="line"># Now define mobility in plane &lt;1000&gt;</span><br><span class="line">#</span><br><span class="line">mobility material=4H-SiC	n.angle=90.0 p.angle=90.0 vsatn=2e7 vsatp=2e7 \</span><br><span class="line">			betan=2 betap=2 mu1n.caug=5  mu2n.caug=80 ncritn.caug=13e17  \</span><br><span class="line">			deltan.caug=0.6 gamman.caug=0.0 \</span><br><span class="line">			alphan.caug=-3 betan.caug=-3 \</span><br><span class="line">			mu1p.caug=2.5   mu2p.caug=20  ncritp.caug=1e19 \</span><br><span class="line">			deltap.caug=0.5  gammap.caug=0.0 \</span><br><span class="line">			alphap.caug=-3 betap.caug=-3</span><br><span class="line">通过改变n.angle=90.0 p.angle=90.0来实现各向异性的仿真</span><br><span class="line">![](images/atlas/2025-06-22-19-36-16.png)</span><br><span class="line">输出的电场分布图</span><br></pre></td></tr></table></figure>
+<p>HyFET同时包含了横向和纵向的电流通路，各向异性的mobility模拟很重要！</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&text=simulation-learning"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&is_video=false&description=simulation-learning"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=simulation-learning&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&title=simulation-learning"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&name=simulation-learning&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/22/simulation-learning/&t=simulation-learning"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
