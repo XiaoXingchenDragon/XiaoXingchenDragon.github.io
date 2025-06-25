@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="任务已经明晰  literature review 找到商用片的参数并仿真找到商用片，分开复现2d仿真热源模型，然后跑package 同步学习comsol-问一下ref：Stacked Strongly Coupled GaN&#x2F;SiC Cascode Device With Fast Switching and Reclaimed Strong dv&#x2F;dt Controlcas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cascode-SiC&#x2F;GaN">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="任务已经明晰  literature review 找到商用片的参数并仿真找到商用片，分开复现2d仿真热源模型，然后跑package 同步学习comsol-问一下ref：Stacked Strongly Coupled GaN&#x2F;SiC Cascode Device With Fast Switching and Reclaimed Strong dv&#x2F;dt Controlcas">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-14-30-41.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-15-25-18.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-16-28-57.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-16-39-56.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-17-33-17.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-17-57-34.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-18-05-48.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-19-39-06.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-19-59-09.png">
+<meta property="article:published_time" content="2025-06-25T05:16:52.000Z">
+<meta property="article:modified_time" content="2025-06-25T12:18:08.841Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="cascode-SiC&#x2F;GaN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-25-14-30-41.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>cascode-SiC/GaN</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/22/simulation-learning/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&text=cascode-SiC/GaN"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&is_video=false&description=cascode-SiC/GaN"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cascode-SiC/GaN&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&name=cascode-SiC/GaN&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&t=cascode-SiC/GaN"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        cascode-SiC/GaN
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-25T05:16:52.000Z" class="dt-published" itemprop="datePublished">2025-06-25</time>
+        
+        (Updated: <time datetime="2025-06-25T12:18:08.841Z" class="dt-updated" itemprop="dateModified">2025-06-25</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/cascode-SiC-GaN/" rel="tag">cascode-SiC/GaN</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>任务已经明晰</p>
+<ul>
+<li>literature review</li>
+<li>找到商用片的参数并仿真<br>找到商用片，分开复现<br>2d仿真热源模型，然后跑package</li>
+<li>同步学习comsol-问一下<br>ref：<small><span style="color:gray">Stacked Strongly Coupled GaN&#x2F;SiC Cascode Device With Fast Switching and Reclaimed Strong dv&#x2F;dt Control</span></small><br><img src="/images/atlas/2025-06-25-14-30-41.png"><br>cascode的截面图，文中用SiC LVmosfet作比较，cascode的优点在于，channel的mobility高，变为常开式的代价小<br>这篇文章的核心是dv&#x2F;dt；low interconnection inductance,increased capative gate-to-drain coupling</li>
+</ul>
+<p>1.2kV&#x2F;68-m+40&#x2F;3m<br>380um direct-bonding-copper (DBC)<br>According to the simulation results based on Q3D software, the parasitic inductance Lp is reduced to less than 80 pH<br>A double pulse test (DPT)<br>了解一下双脉冲测试DPT<br><img src="/images/atlas/2025-06-25-15-25-18.png"><br>目的是模拟实际的开关过程，反偏的SBD模拟了GS短接情况下器件的反偏电阻，Load模拟了开关开启时的电感，为了实现minimum的开关器件，实际上需要减少从D端出发的电容DG+DS。GaN HEMT 的GD天然的小，优化的方向是DS</p>
+<p>什么是tunable dv&#x2F;dt？ dv&#x2F;dt会引起电磁波，通过modulate dv&#x2F;dt（改变Rs）来限制发射的电磁干扰<br><img src="/images/atlas/2025-06-25-16-28-57.png"></p>
+<ul>
+<li><p>GaN&#x2F;SiC 的controlability比Si&#x2F;SiC更好，但是比Trench和planer SiC差</p>
+</li>
+<li><p>Indeed, the dv&#x2F;dt of a cascode configuration is ultimately controlled by the gate bias of the HV device (VGS_H) [Fig. 7(e)], which is coupled to VDS of the LV device (VDS_L) through LP. VDS_L, in turn, is controlled by the gate driver circuit of the control device through the drain–gate coupling capacitor CGD_L. Such a two-step indirect dv&#x2F;dt control mechanism of the cascode configuration requires strong coupling within both steps to enable strong dv&#x2F;dt control for the cascode device.<br><img src="/images/atlas/2025-06-25-16-39-56.png"></p>
+</li>
+<li><p>改变整个器件通过改变H-VDS</p>
+</li>
+<li><p>H-Vds通过H-Vgs控制H的阻值</p>
+</li>
+<li><p>H-Vgs通过L-Vds控制</p>
+</li>
+<li><p>L-Vds通过gate电压控制<br>当gate从0-&gt;1时，通过CGD开启沟道，VDS迅速下降，L-VD的电压下降（via VGD），同时LVS的和HVS共同连接到G。L-VD从高到低的变化时，通过L的电流剧烈增加，从Hs到Ld的电流增加，while另一条负责HG和LS接地的连接依然没有电流通过，此时形成互感，阻碍电流的变化</p>
+</li>
+<li><p>电感：复习一下，通电直导线周围会产生磁场（电流元产生磁场平方反比积分出来），闭合回路的磁通变化产生感应电动势<br><img src="/images/atlas/2025-06-25-17-33-17.png"><br>定义V&#x3D;L*di&#x2F;dt；L&#x3D;dfai&#x2F;di<br>实际情况下的导线电感计算比较复杂，总之越短电感越小</p>
+</li>
+</ul>
+<p>回到文章的结论：</p>
+<ul>
+<li>考虑Lp比不考虑Lp的di&#x2F;dt controlability 更差</li>
+<li>Gate电容越大时controability 更好，这解释了为什么SiC的controlability更好</li>
+<li>commercial Si&#x2F;SiC cascode用bonding wires，因此即使Cgd大也失去了controability</li>
+<li>比起没有interconnection的Single mosfet 依然差得远</li>
+</ul>
+<p>因此，想要提高controllability， 直接的办法是 增加CGD_L，这是否会影响overall CGD呢，并不，因为在正向饱和以后，JFET出现pinch off， while VL-DS稳定在VTH，因此，CGD会被JFET的depletion电容主导，这个电容是很小的。通过并联电容，实现了很强的controllability<br><img src="/images/atlas/2025-06-25-17-57-34.png"></p>
+<p>电感在瞬态时能主导电压，而整体的分压ir&#x3D;L*di&#x2F;dt 是一阶微分方程，因此会出现正弦解，电阻越大震荡被抑制得越厉害，因此有必要证明过冲电流不会影响GaN的正常工作<br><img src="/images/atlas/2025-06-25-18-05-48.png"></p>
+<p>ref：<small><span style="color:gray">Unlocking the Full Potential of GaN&#x2F;SiC Cascode Device With 3D Co-Packaging and Enhanced dv&#x2F;dt Control Capability</span></small><br><img src="/images/atlas/2025-06-25-19-39-06.png"><br>很简单，开态就是VGS-H逐渐充电的过程（JFET关断），关闭就是VGS-H放电<br><img src="/images/atlas/2025-06-25-19-59-09.png"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&text=cascode-SiC/GaN"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&is_video=false&description=cascode-SiC/GaN"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cascode-SiC/GaN&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&title=cascode-SiC/GaN"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&name=cascode-SiC/GaN&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/25/cascode-SiC-GaN/&t=cascode-SiC/GaN"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
