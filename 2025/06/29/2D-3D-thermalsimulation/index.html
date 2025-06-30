@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="真得沉淀ref：Advanced Methodology for Fast 3-D TCAD Device&#x2F;Circuit Electrothermal Simulation and Analysis of Power HEMTs用analytical模型，2D-3D耦合仿真热，使用sentarus，参考意义不大（10年前了）ref：Hybrid Monte Carlo-Diffusio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GaN-HEMT的交流拟合与热穿透深度">
+<meta property="og:url" content="https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/index.html">
+<meta property="og:site_name" content="XingChenhome">
+<meta property="og:description" content="真得沉淀ref：Advanced Methodology for Fast 3-D TCAD Device&#x2F;Circuit Electrothermal Simulation and Analysis of Power HEMTs用analytical模型，2D-3D耦合仿真热，使用sentarus，参考意义不大（10年前了）ref：Hybrid Monte Carlo-Diffusio">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-18-33-35.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-20-42-31.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-21-10-25.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-21-10-02.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-21-25-28.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-21-25-55.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-21-27-24.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-01-51.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-27-20.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-31-52.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-41-06.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-45-54.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-10-53-35.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-11-17-01.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-11-23-29.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-11-35-35.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-12-07-46.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-12-13-08.png">
+<meta property="og:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-30-12-14-55.png">
+<meta property="article:published_time" content="2025-06-29T09:00:57.000Z">
+<meta property="article:modified_time" content="2025-06-30T05:38:00.482Z">
+<meta property="article:author" content="肖星辰">
+<meta property="article:tag" content="SiC-GaN-HyFET">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxingchendragon.github.io/images/atlas/2025-06-29-18-33-35.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>GaN-HEMT的交流拟合与热穿透深度</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/26/AC-thermal-simulation/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&text=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&is_video=false&description=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GaN-HEMT的交流拟合与热穿透深度&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&name=GaN-HEMT的交流拟合与热穿透深度&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&t=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84supply-material-%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">这篇文章的supply material 非常重要！</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        GaN-HEMT的交流拟合与热穿透深度
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">肖星辰</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-29T09:00:57.000Z" class="dt-published" itemprop="datePublished">2025-06-29</time>
+        
+        (Updated: <time datetime="2025-06-30T05:38:00.482Z" class="dt-updated" itemprop="dateModified">2025-06-30</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SiC-GaN-HyFET/" rel="tag">SiC-GaN-HyFET</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>真得沉淀<br>ref：<small><span style="color:gray">Advanced Methodology for Fast 3-D TCAD Device&#x2F;Circuit Electrothermal Simulation and Analysis of Power HEMTs</span></small><br><img src="/images/atlas/2025-06-29-18-33-35.png"><br>用analytical模型，2D-3D耦合仿真热，使用sentarus，参考意义不大（10年前了）<br>ref：<small><span style="color:gray">Hybrid Monte Carlo-Diffusion Studies of Modeling SelfHeating in Ballistic-Diffusive<br>Regime for Gallium Nitride HEMTs</span></small><br>比较了水动力蒙特卡洛（一种简化的蒙特卡洛算法）和面热源法的关系，结论是水动力可以很好的预测，while我们已经知道面热源法对结温的预测是不足的<br>ref：<small><span style="color:gray">Implications of Interfacial Thermal Transport on the Self-Heating of GaN-on-SiC High Electron Mobility Transistors</span></small><br>测量界面热阻<br><img src="/images/atlas/2025-06-29-20-42-31.png"><br>讲的优化方向，时间不够不看了</p>
+<p>ref：<small><span style="color:gray">Near-junction phonon thermal spreading in GaN HEMTs: A comparative study of simulation techniques by full-band phonon Monte Carlo method</span></small><br>杨哥写的，结论是傅里叶传热依然坚挺</p>
+<p>ref：<small><span style="color:gray">Transient simulations and theoretical modeling of near-junction heat conduction in GaN-on-diamond HEMT </span></small><br>研究交流产热<br><img src="/images/atlas/2025-06-29-21-10-25.png"><br>用了究极简化手法<br><img src="/images/atlas/2025-06-29-21-10-02.png"><br>是我需要的，在comsol中使用自由四面体网格，</p>
+<h3 id="这篇文章的supply-material-非常重要！"><a href="#这篇文章的supply-material-非常重要！" class="headerlink" title="这篇文章的supply material 非常重要！"></a>这篇文章的supply material 非常重要！</h3><p><img src="/images/atlas/2025-06-29-21-25-28.png"><br><img src="/images/atlas/2025-06-29-21-25-55.png"><br>对pulse和峰值温度的一些分析<br><img src="/images/atlas/2025-06-29-21-27-24.png"><br>其实是特别好的信号，它终于tmd证明了，在微秒级的波形变化下，热是来不及散出去的，甚至calibration也有思路了，可以假设在pulse时间内温度线性提升，这样就是一种简单的two-way电热耦合了</p>
+<p>接下来要看的东西实际上是thermal penetration depth，文中把depth定义为ΔT&lt;5%的depth，且文中的gap为200um<br>但是，GaN因为1）热导比SiC小，2）热点集中，初期扩散热阻占绝对的大头。<br>再回来看看cascode测试的频率：没写，可以问问，但极大概率是够用的；<br>参数设置这些要好好学</p>
+<p>ref：<small><span style="color:gray">An Accurate Electrical and Thermal Co-Simulation Framework for Modeling High-Temperature DC and Pulsed I-V Characteristics of GaN HEMTs </span></small><br><img src="/images/atlas/2025-06-30-10-01-51.png"><br>结温建模包含了interface和界面</p>
+<p>引入C为了compensate UID n， Fe为了增加reverse recovery，Fe下去仔细研究<br><img src="/images/atlas/2025-06-30-10-27-20.png"><br>UID过高失去整流特性；过低则对亚阈值的拟合失效</p>
+<ul>
+<li>因为HEMT中是majority carrier transport， SRH recombination is negligible<br>看下给的mobility model<br><img src="/images/atlas/2025-06-30-10-31-52.png"><br>gate leakage only consider thermionic emission (我好像不是很care gate leakage)<br><img src="/images/atlas/2025-06-30-10-41-06.png"><br><img src="/images/atlas/2025-06-30-10-45-54.png"><br>electrode thermally insulating 会影响准确性，pading的导热率很重要<br><img src="/images/atlas/2025-06-30-10-53-35.png"><br>有参数<br>ref：<small><span style="color:gray">Electro-thermo-mechanical Transient Modeling of Stress Development in AlGaN&#x2F;GaNHigh Electron Mobility Transistors (HEMTs)</span></small><br>the stress under RF conditions</li>
+</ul>
+<p>用一个热阻来模拟下面的封装，热阻根据thermal模型拟合而来<br><img src="/images/atlas/2025-06-30-11-17-01.png"><br>好像也行<br><img src="/images/atlas/2025-06-30-11-23-29.png"><br>Gate FP附近的电场分布，挺有意思的结果，VDS更高时，FP的边缘出现更密的电场，在相同功率下，反而VDS更高时，峰值温度更低hhh<br><img src="/images/atlas/2025-06-30-11-35-35.png"><br>一样的问题，没有考虑多周期，避重就轻</p>
+<p>ref：<small><span style="color:gray">Optimization based on electro-thermo-mechanical modeling of the high electron mobility transistor (HEMT)</span></small><br>作为dataset，里面有仿真参数</p>
+<p>ref：<small><span style="color:gray">Numerical Modeling of Dynamic Thermal Coupling in GaN HEMTs Calibrated by Transient Measurements</span></small><br><img src="/images/atlas/2025-06-30-12-07-46.png"><br>和我预想的一样50interval的pulse连续施加，这篇文章的参数和网格密度依然可以参考<br><img src="/images/atlas/2025-06-30-12-13-08.png"><br><img src="/images/atlas/2025-06-30-12-14-55.png"><br>这种图还可以翻译为-扩散热阻占了大多数</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/blogs/">blogs</a></li>
+        
+          <li><a href="/trips/">trips</a></li>
+        
+          <li><a href="/projects/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84supply-material-%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">这篇文章的supply material 非常重要！</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&text=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&is_video=false&description=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GaN-HEMT的交流拟合与热穿透深度&body=Check out this article: https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&title=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&name=GaN-HEMT的交流拟合与热穿透深度&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xiaoxingchendragon.github.io/2025/06/29/2D-3D-thermalsimulation/&t=GaN-HEMT的交流拟合与热穿透深度"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    肖星辰
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogs/">blogs</a></li><!--
+     --><!--
+       --><li><a href="/trips/">trips</a></li><!--
+     --><!--
+       --><li><a href="/projects/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
